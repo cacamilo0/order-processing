@@ -150,7 +150,9 @@ curl http://localhost:8080/api/v1/orders/{orderId}
 
 - [x] Spring Boot project setup
 - [x] PostgreSQL schema (`op` schema, Flyway migrations)
-- [ ] REST endpoints — create and query orders
+- [x] REST endpoints — create and query orders
+- [x] DTO validations - global exception handler
+- [x] PostgreSQL run with Docker with init script
 - [ ] Kafka integration in Spring Boot
 - [ ] Go payment-service
 - [ ] Go preparation-service

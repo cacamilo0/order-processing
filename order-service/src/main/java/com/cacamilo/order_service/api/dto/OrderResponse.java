@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter
@@ -17,6 +17,6 @@ public class OrderResponse {
     private UUID orderId;
     private OrderStatus status;
     private BigDecimal total;
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
 }

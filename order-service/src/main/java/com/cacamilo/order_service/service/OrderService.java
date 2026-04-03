@@ -1,5 +1,6 @@
 package com.cacamilo.order_service.service;
 
+import com.cacamilo.order_service.api.OrderNotFoundException;
 import com.cacamilo.order_service.api.dto.CreateOrderRequest;
 import com.cacamilo.order_service.api.dto.OrderResponse;
 import com.cacamilo.order_service.domain.OrderEntity;
@@ -10,6 +11,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -41,7 +44,7 @@ public class OrderService {
         );
         order.addEvent(event);
         orderRepository.save(order);
-        log.info("[{}] order-id: [{}] (pending persistence)", event.getEventType(), order.getId());
+        log.info("Order created successfully. orderId={} customerId={}", order.getId(), order.getCustomerId());
         return OrderResponse.builder()
                 .orderId(order.getId())
                 .total(order.getTotalAmount())
@@ -50,4 +53,15 @@ public class OrderService {
                 .build();
     }
 
+    public OrderResponse getOrder(UUID orderId) {
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(orderId.toString()));
+
+        return OrderResponse.builder()
+                .orderId(order.getId())
+                .status(order.getStatus())
+                .total(order.getTotalAmount())
+                .createdAt(order.getCreatedAt())
+                .build();
+    }
 }

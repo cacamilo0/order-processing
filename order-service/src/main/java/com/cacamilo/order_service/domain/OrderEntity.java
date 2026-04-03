@@ -2,12 +2,12 @@ package com.cacamilo.order_service.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,10 +33,10 @@ public class OrderEntity {
     private BigDecimal totalAmount;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private OffsetDateTime updatedAt;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
@@ -70,8 +70,8 @@ public class OrderEntity {
         order.setId(UUID.randomUUID());
         order.setCustomerId(customerId);
         order.setStatus(OrderStatus.CREATED);
-        order.setCreatedAt(LocalDateTime.now());
-        order.setUpdatedAt(LocalDateTime.now());
+        order.setCreatedAt(OffsetDateTime.now(ZoneOffset.UTC));
+        order.setUpdatedAt(OffsetDateTime.now(ZoneOffset.UTC));
         return order;
     }
 

@@ -5,7 +5,8 @@ import lombok.Getter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.UUID;
 
@@ -31,14 +32,14 @@ public class OrderEvent {
     private Map<String, Object> payload;
 
     @Column(name = "occurred_at", nullable = false, updatable = false)
-    private LocalDateTime occurredAt;
+    private OffsetDateTime occurredAt;
 
     protected OrderEvent() {}
 
     public OrderEvent(OrderEventType eventType, Map<String, Object> payload) {
         this.eventType = eventType;
         this.payload = payload;
-        this.occurredAt = LocalDateTime.now();
+        this.occurredAt = OffsetDateTime.now(ZoneOffset.UTC);
     }
 
     void setOrder(OrderEntity order) {

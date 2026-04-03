@@ -1,5 +1,8 @@
 package com.cacamilo.order_service.api.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +13,12 @@ import java.util.UUID;
 @Setter
 public class CreateOrderRequest {
 
+    @NotNull(message = "customerId is required")
     private UUID customerId;
+
+    @NotNull(message = "items is required")
+    @NotEmpty(message = "items cannot be empty")
+    @Valid
     private List<ItemDto> items;
 
 }
